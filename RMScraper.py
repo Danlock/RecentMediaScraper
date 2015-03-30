@@ -1,5 +1,4 @@
 import requests
-import bs4
 import json
 
 
@@ -21,10 +20,8 @@ def getRTMovieObj(url):
             temp = json.loads(response.text)
             query["movies"] = query["movies"] + temp["movies"]
 
-        print len(query["movies"])
         return query
-    except Exception, e:
-        print "non-paged"
+    except Exception:
         return query
 
 
@@ -37,13 +34,18 @@ rtMovieObj = getRTMovieObj(rtOpeningMovieURL)
 otherrtMovieObj = getRTMovieObj(rtTheatersMovieURL)
 theMovieObj = getRTMovieObj(rtInTheatersMovieURL)
 
-f = open("debug.txt",'w')
+print("OPENING: " + str(len(rtMovieObj["movies"])))
+print("BOX OFFICE: " +  str(len(otherrtMovieObj["movies"])))
+print("IN THEATERS: " + "(" + str(len(theMovieObj["movies"])) + ")\nTotal:" + str(theMovieObj["total"]))
+MOVIE_DB = rtMovieObj.copy();
+MOVIE_DB.update(otherrtMovieObj)
+MOVIE_DB.update(theMovieObj)
 
-json.dump(theMovieObj,f)
+#MOVIE_DB = rtMovieObj["movies"] + otherrtMovieObj["movies"] + theMovieObj["movies"]
+print("Rotten Tomatoes Count: " + str(len(MOVIE_DB["movies"])))
 
-print "OPENING: " + str(len(rtMovieObj["movies"]))
-print "BOX OFFICE: " +  str(len(otherrtMovieObj["movies"])) 
-print "IN THEATERS: " + "(" + str(len(theMovieObj["movies"])) + ")\nTotal:" + str(theMovieObj["total"])
-MOVIE_DB = rtMovieObj["movies"] + otherrtMovieObj["movies"] + theMovieObj["movies"]
-print "Rotten Tomatoes Count: " + str(len(MOVIE_DB))
-
+#dbkeys = ()
+#for k,v in MOVIE_DB["movies"].items():
+#    dbkeys += k
+dbkeys = MOVIE_DB["movies"][0].keys()
+print("DEBUG: Database keys - " + str(dbkeys))
