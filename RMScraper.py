@@ -3,10 +3,12 @@ import json
 
 
 APIKey = "x6eczgpphusuzb6dryk77r8g"
-par = { "apikey": APIKey, "limit" : "50", "country":"ca", "page_limit": "50", "page": "1"}
+par = {"apikey": APIKey, "limit": "50",
+       "country": "ca", "page_limit": "50", "page": "1"}
+
 
 def getRTMovieObj(url):
-    response = requests.get(url,params=par)
+    response = requests.get(url, params=par)
     query = json.loads(response.text)
 
     try:
@@ -16,7 +18,7 @@ def getRTMovieObj(url):
         while (pages * int(par["page_limit"]) < total):
             pages += 1
             par["page"] = str(pages)
-            response = requests.get(url,params=par)
+            response = requests.get(url, params=par)
             temp = json.loads(response.text)
             query["movies"] = query["movies"] + temp["movies"]
 
@@ -35,17 +37,18 @@ otherrtMovieObj = getRTMovieObj(rtTheatersMovieURL)
 theMovieObj = getRTMovieObj(rtInTheatersMovieURL)
 
 print("OPENING: " + str(len(rtMovieObj["movies"])))
-print("BOX OFFICE: " +  str(len(otherrtMovieObj["movies"])))
-print("IN THEATERS: " + "(" + str(len(theMovieObj["movies"])) + ")\nTotal:" + str(theMovieObj["total"]))
-MOVIE_DB = rtMovieObj.copy();
+print("BOX OFFICE: " + str(len(otherrtMovieObj["movies"])))
+print("IN THEATERS: " + "(" +
+      str(len(theMovieObj["movies"])) + ")\nTotal:" + str(theMovieObj["total"]))
+MOVIE_DB = rtMovieObj.copy()
 MOVIE_DB.update(otherrtMovieObj)
 MOVIE_DB.update(theMovieObj)
 
-#MOVIE_DB = rtMovieObj["movies"] + otherrtMovieObj["movies"] + theMovieObj["movies"]
+# MOVIE_DB = rtMovieObj["movies"] + otherrtMovieObj["movies"] + theMovieObj["movies"]
 print("Rotten Tomatoes Count: " + str(len(MOVIE_DB["movies"])))
 
-#dbkeys = ()
-#for k,v in MOVIE_DB["movies"].items():
+# dbkeys = ()
+# for k,v in MOVIE_DB["movies"].items():
 #    dbkeys += k
 dbkeys = MOVIE_DB["movies"][0].keys()
 print("DEBUG: Database keys - " + str(dbkeys))
