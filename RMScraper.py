@@ -58,6 +58,5 @@ def scanAPIKey():
     dbkeys = MOVIE_DB["movies"][0].keys()
     print("DEBUG: Database keys - " + str(dbkeys))
 
-
 if __name__ == '__main__':
     main()
