@@ -1,0 +1,9 @@
+{% if latest_movie_list %}
+    <ul>
+    {% for question in latest_movie_list %}
+        <li><a href="/RecentMediaScraper/{{ question.id }}/">{{ question.title }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No media is available.</p>
+{% endif %}
