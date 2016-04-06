@@ -1,6 +1,6 @@
 import requests
 import json
-
+#Old code that doesn't work now Rotten Tomatoes changed their API.
 #APIKEY required, place key in key.properties file for easy access
 par = {"apikey": "", "limit": "50",
        "country": "ca", "page_limit": "50", "page": "1"}

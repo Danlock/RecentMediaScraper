@@ -3,8 +3,13 @@ from django.http import HttpResponse
 from django.template import loader
 
 from .models import Movie
+from .TMDB_API import TMDB_API
 
 def index(request):
+    test = TMDB_API()
+    testObj = test.getListOfRecentMovies()
+    test.saveToDB(testObj)
+
     latest_movie_list = Movie.objects.order_by('-release_date')[:3]
     template = loader.get_template('RecentMediaScraper/index.html')
     context = {'latest_movie_list': latest_movie_list,}
