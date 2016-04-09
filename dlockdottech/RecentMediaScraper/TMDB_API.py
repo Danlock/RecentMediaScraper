@@ -18,13 +18,15 @@ class TMDB_API:
     def filterMovies(self,movies):
         return movies["results"]
 
-    def saveToDB(movies):
+    def saveToDB(self,movies):
+        nullify = lambda s: s or ""
+
         for movieList in movies:
             for movie in movieList:
-                movie_obj = Movie(title=movie["title"], release_date=movies["release_date"], popularity=movie["popularity"],
-                    backdrop_path=movie["backdrop_path"], genre_ids=movie["genre_ids"], poster_path=movie["poster_path"],
-                    vote_average=movie["vote_average"], media_id=movie["id"], adult=movie["adult"],
-                    vote_count=movie["vote_count"], original_language=movie["original_language"], overview=movie["overview"])
+                movie_obj = Movie(title=nullify(movie['title']), release_date=movie['release_date'], popularity=movie['popularity'],
+                    backdrop_path=nullify(movie['backdrop_path']), genre_ids=movie['genre_ids'], poster_path=nullify(movie['poster_path']),
+                    vote_average=movie['vote_average'], media_id=movie['id'], adult=movie['adult'],
+                    vote_count=movie['vote_count'], original_language=nullify(movie['original_language']), overview=nullify(movie['overview']))
                 movie_obj.save()
 
     def scanAPIKey(self):
