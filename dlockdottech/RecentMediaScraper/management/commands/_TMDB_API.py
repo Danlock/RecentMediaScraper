@@ -3,7 +3,7 @@ from datetime import date
 from datetime import datetime,timedelta
 import json
 
-from .models import Movie
+from RecentMediaScraper.models import Movie
 
 class TMDB_API:
 

@@ -11,7 +11,7 @@ def index(request):
     # testObj = test.getListOfRecentMovies()
     # test.saveToDB(testObj)
 
-    latest_movie_list = Movie.objects.order_by('-release_date')
+    latest_movie_list = Movie.objects.order_by('-vote_average')
     template = loader.get_template('RecentMediaScraper/index.html')
     context = {'latest_movie_list': latest_movie_list,}
     return render(request,'RecentMediaScraper/index.html',context)
