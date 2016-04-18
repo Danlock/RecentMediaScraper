@@ -2,6 +2,7 @@ from django.core.management.base import BaseCommand, CommandError
 
 from ._TMDB_API import TMDB_API
 from RecentMediaScraper.models import Movie
+from RecentMediaScraper.models import Config
 
 class Command(BaseCommand):
     help = 'Clears and repopulates the DB.'
@@ -19,7 +20,12 @@ class Command(BaseCommand):
 
     def handle(self,*args, **options):
         Movie.objects.all().delete()
+        Config.objects.all().delete()
 
-        test = TMDB_API()
-        testObj = test.getListOfRecentMovies()
-        test.saveToDB(testObj)
+        api = TMDB_API()
+        movies = api.getListOfRecentMovies()
+        api.saveToDB(movies)
+        
+
+        api.updateConfiguration()
+

@@ -4,6 +4,7 @@ from datetime import datetime,timedelta
 import json
 
 from RecentMediaScraper.models import Movie
+from RecentMediaScraper.models import Config
 
 class TMDB_API:
 
@@ -26,7 +27,7 @@ class TMDB_API:
         if (float(movie['popularity']) < 4.0):
             return
 
-        #takes care of None objects
+        # takes care of None objects
         nullify = lambda s: s or ""
         Movie(title=nullify(movie['title']), release_date=movie['release_date'], popularity=movie['popularity'],
                 backdrop_path=nullify(movie['backdrop_path']), genre_ids=movie['genre_ids'], poster_path=nullify(movie['poster_path']),
@@ -54,11 +55,24 @@ class TMDB_API:
                 last_page = now["total_pages"]
         return res
 
+    def updateConfiguration(self):
+        settings = tmdb.Configuration().info()
+        size = {'poster_sizes' : settings['images']['poster_sizes'], 
+                'backdrop_sizes' : settings['images']['backdrop_sizes']}
+
+        Config(TMDB_baseurl=settings['images']['base_url'],
+            TMDB_secureBaseurl=settings['images']['secure_base_url'],
+            TMDB_JSON_size=json.dumps(size)).save()
+
 
 def testRun():
-    test = TMDB_API()
-    testObj = test.getListOfRecentMovies()
-    test.saveToDB(testObj)
+    return
+    # test = TMDB_API()
+    # testObj = test.getListOfRecentMovies()
+    # test.saveToDB(testObj)
+    # test.updateConfiguration()
+
+
     # for r in test:
     #     print(json.dumps(r))
 
