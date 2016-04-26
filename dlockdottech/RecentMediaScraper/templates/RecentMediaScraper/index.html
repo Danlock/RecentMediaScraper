@@ -1,7 +1,7 @@
 {% if latest_movie_list %}
     <ul>
     {% for movie in latest_movie_list %}
-        <li><a href="/RecentMediaScraper/{{ movie.id }}/">{{ movie.title }}</a></li>
+        <li><img src="{{ poster_prefix }}/{{ movie.poster_path }}/"/>{{ movie.title }}</li>
     {% endfor %}
     </ul>
 {% else %}

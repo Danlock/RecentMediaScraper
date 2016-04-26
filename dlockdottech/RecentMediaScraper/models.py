@@ -22,6 +22,7 @@ class Movie(models.Model):
     def __str__(self):
         return self.title
 
+#JSON_size structure = {'backdrop_sizes': ['w300', 'w780', 'w1280', 'original'],'poster_sizes': ['w92', 'w154', 'w185', 'w342', 'w500', 'w780', 'original']}
 class Config(models.Model):
     singleton_enforce = models.PositiveIntegerField(default=1,unique=True)
     TMDB_baseurl = models.CharField(max_length=300,default=" ")
@@ -29,7 +30,7 @@ class Config(models.Model):
     TMDB_JSON_size = models.CharField(max_length=300,default=" ")
 
     def getImageSizes(self):
-        return json.dumps(TMDB_JSON_size)
+        return json.loads(self.TMDB_JSON_size)
 
     def __str__(self):
         return 'config'
