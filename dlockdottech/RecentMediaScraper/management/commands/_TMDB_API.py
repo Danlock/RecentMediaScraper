@@ -6,6 +6,9 @@ import json
 from RecentMediaScraper.models import Movie
 from RecentMediaScraper.models import Config
 
+
+#class interface of tmdbsimple, pulls relevant media from TMDB and saves to Django DB. 
+#Requires TMDB API key in a file called key.properties
 class TMDB_API:
 
     def __init__(self):
@@ -22,13 +25,14 @@ class TMDB_API:
         if (movie['original_language'] != 'en') \
         or (datetime.strptime(movie['release_date'],'%Y-%m-%d').date() < self.minimumDate):
             return
-        if (int(movie['vote_count']) == 0) or (float(movie['vote_average']) < 3.0):
+        if (int(movie['vote_count']) == 0) or (float(movie['vote_average']) < 2.0):
             return
-        if (float(movie['popularity']) < 4.0):
+        if (float(movie['popularity']) < 3.6):
             return
 
         # takes care of None objects
         nullify = lambda s: s or ""
+
         Movie(title=nullify(movie['title']), release_date=movie['release_date'], popularity=movie['popularity'],
                 backdrop_path=nullify(movie['backdrop_path']), genre_ids=movie['genre_ids'], poster_path=nullify(movie['poster_path']),
                 vote_average=movie['vote_average'], media_id=movie['id'], adult=movie['adult'],
@@ -44,7 +48,7 @@ class TMDB_API:
         cur_page = 1
         last_page = -1
         res = []
-
+        #deal with multiple pages
         while cur_page != last_page:
             kwargs = {'language':'en', 'page':cur_page}
             now = movies.now_playing(**kwargs)

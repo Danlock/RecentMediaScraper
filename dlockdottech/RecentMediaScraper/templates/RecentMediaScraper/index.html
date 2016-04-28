@@ -16,18 +16,25 @@
 
     <script src="{% static "RMS/js/vendor/modernizr-2.8.3-respond-1.4.2.min.js" %}"></script>
 </head>
+<!-- IDEAS for UI
+    Translate ratings into stars
+    Organize title and rating to be horizontal from image, near the top
+    bold title
+    decide standard overview length, or truncate overview but expand to full overview onclick
+ -->
 {% if latest_movie_list %}
-    <ul>
+    
     {% for movie in latest_movie_list %}
-        <li>
+        <div class="movie_container">
             <div class="movie">
                 <img class="movie_img" src="{{ poster_prefix }}/{{ movie.poster_path }}"/>
-                <p class="movie_title"> {{ movie.title }} {{ movie.vote_average }}</p>
+                <h4 class="movie_title">{{ movie.title }}</h4>
+                <p class="movie_rating">{{ movie.vote_average }}</p>
                 <p class="movie_overview">{{ movie.overview }} </p>
             </div>
-        </li>
+        </div>
     {% endfor %}
-    </ul>
+    
 {% else %}
     <p>No media is available.</p>
 {% endif %}

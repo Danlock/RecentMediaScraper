@@ -13,16 +13,7 @@ def index(request):
     sizes = config.getImageSizes()
     prefix = config.TMDB_baseurl + sizes['poster_sizes'][0]
 
+    #template requires static files that should be in /static/RMS/
     template = loader.get_template('RecentMediaScraper/index.html')
     context = {'latest_movie_list': latest_movie_list, 'poster_prefix' : prefix}
     return render(request,'RecentMediaScraper/index.html',context)
-#movieslatest_movie_list
-def detail(request, movie_id):
-    return HttpResponse("You're looking at movie %s." % movie_id)
-# #anime
-# def results(request, anime_id):
-#     response = "You're looking at anime %s."
-#     return HttpResponse(response % anime_id)
-# #tvshows
-# def vote(request, tvshow_id):
-#     return HttpResponse("You're voting on the tv show  %s." % tvshow_id)
