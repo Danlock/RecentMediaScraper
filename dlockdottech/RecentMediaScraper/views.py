@@ -4,7 +4,6 @@ from django.template import loader
 
 from .models import Movie
 from .models import Config
-from .TMDB_API import TMDB_API
 
 def index(request):
     latest_movie_list = Movie.objects.order_by('-vote_average')

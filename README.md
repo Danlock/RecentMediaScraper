@@ -3,18 +3,12 @@ simple Django based web app to grab recently released movies titles and descript
 
 Deployment Instructions:
 
-Requires:
+pip install -r requirements.txt
 
-Django==1.9.3
-
-requests==2.5.3
-
-tmdbsimple==1.3.0
-
-Also requires a one line "key.properties" file placed under dlockdottech that contains a TMDB API authentication key.
+Requires a one line "key.properties" file placed under dlockdottech/management/commands/ that contains a TMDB API authentication key.
 
 Run:
-python manage.py repopulateDB
+python manage.py repopulateDB 
 python manage.py runserver 
 
 and then go to

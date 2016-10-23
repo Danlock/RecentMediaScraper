@@ -1,10 +1,12 @@
 import tmdbsimple as tmdb
 from datetime import date
 from datetime import datetime,timedelta
+import os 
 import json
 
 from RecentMediaScraper.models import Movie
 from RecentMediaScraper.models import Config
+dir_path = os.path.dirname(os.path.realpath(__file__))
 
 
 #class interface of tmdbsimple, pulls relevant media from TMDB and saves to Django DB. 
@@ -40,7 +42,7 @@ class TMDB_API:
             ).save()
 
     def scanAPIKey(self):
-        with open('key.properties', 'r') as f:
+        with open(dir_path+'/key.properties', 'r') as f:
             tmdb.API_KEY = f.readline().strip()
 
     def getListOfRecentMovies(self):
